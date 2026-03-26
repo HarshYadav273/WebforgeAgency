@@ -1,9 +1,9 @@
 import express from 'express';
-import db from '../db/database.js';
+import { addContact, getContacts } from '../db/database.js';
 
 const router = express.Router();
 
-router.post('/contact', (req, res) => {
+router.post('/contact', async (req, res) => {
   try {
     const { name, email, service, budget, message } = req.body;
 
@@ -11,15 +11,12 @@ router.post('/contact', (req, res) => {
       return res.status(400).json({ error: 'All fields are required' });
     }
 
-    const stmt = db.prepare(
-      'INSERT INTO contacts (name, email, service, budget, message) VALUES (?, ?, ?, ?, ?)'
-    );
-    const result = stmt.run(name, email, service, budget, message);
+    const contact = await addContact({ name, email, service, budget, message });
 
     res.status(201).json({
       success: true,
       message: 'Contact form submitted successfully',
-      id: result.lastInsertRowid,
+      id: contact.id,
     });
   } catch (error) {
     console.error('Error saving contact:', error);
@@ -27,9 +24,9 @@ router.post('/contact', (req, res) => {
   }
 });
 
-router.get('/contacts', (req, res) => {
+router.get('/contacts', async (req, res) => {
   try {
-    const contacts = db.prepare('SELECT * FROM contacts ORDER BY created_at DESC').all();
+    const contacts = await getContacts();
     res.json(contacts);
   } catch (error) {
     console.error('Error fetching contacts:', error);

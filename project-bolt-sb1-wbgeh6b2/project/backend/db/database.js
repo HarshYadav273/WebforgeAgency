@@ -1,22 +1,56 @@
-import Database from 'better-sqlite3';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { mkdir, readFile, writeFile } from 'fs/promises';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const dataDir = __dirname;
+const dataFile = join(dataDir, 'contacts.json');
 
-const db = new Database(join(__dirname, 'contacts.db'));
+async function ensureStore() {
+  await mkdir(dataDir, { recursive: true });
 
-db.exec(`
-  CREATE TABLE IF NOT EXISTS contacts (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    email TEXT NOT NULL,
-    service TEXT NOT NULL,
-    budget TEXT NOT NULL,
-    message TEXT NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-  )
-`);
+  try {
+    await readFile(dataFile, 'utf8');
+  } catch (error) {
+    if (error.code !== 'ENOENT') {
+      throw error;
+    }
 
-export default db;
+    await writeFile(
+      dataFile,
+      JSON.stringify({ nextId: 1, contacts: [] }, null, 2),
+      'utf8'
+    );
+  }
+}
+
+async function readStore() {
+  await ensureStore();
+  const raw = await readFile(dataFile, 'utf8');
+  return JSON.parse(raw);
+}
+
+async function writeStore(store) {
+  await writeFile(dataFile, JSON.stringify(store, null, 2), 'utf8');
+}
+
+export async function addContact(contact) {
+  const store = await readStore();
+  const savedContact = {
+    id: store.nextId,
+    ...contact,
+    created_at: new Date().toISOString(),
+  };
+
+  store.nextId += 1;
+  store.contacts.unshift(savedContact);
+  await writeStore(store);
+
+  return savedContact;
+}
+
+export async function getContacts() {
+  const store = await readStore();
+  return store.contacts;
+}
