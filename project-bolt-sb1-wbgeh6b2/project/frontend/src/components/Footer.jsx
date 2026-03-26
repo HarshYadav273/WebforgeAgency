@@ -39,16 +39,38 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Connect</h4>
             <div className="flex gap-4">
-              <a href="#" className="bg-gray-800 p-3 rounded-full hover:bg-orange-500 transition-all duration-300 transform hover:scale-110">
+              <a
+                href="https://x.com/HarshYadav273"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="X profile"
+                className="bg-gray-800 p-3 rounded-full hover:bg-orange-500 transition-all duration-300 transform hover:scale-110"
+              >
                 <Twitter size={20} />
               </a>
-              <a href="#" className="bg-gray-800 p-3 rounded-full hover:bg-orange-500 transition-all duration-300 transform hover:scale-110">
+              <a
+                href="https://www.linkedin.com/in/harsh-yadav-521891340"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="LinkedIn profile"
+                className="bg-gray-800 p-3 rounded-full hover:bg-orange-500 transition-all duration-300 transform hover:scale-110"
+              >
                 <Linkedin size={20} />
               </a>
-              <a href="#" className="bg-gray-800 p-3 rounded-full hover:bg-orange-500 transition-all duration-300 transform hover:scale-110">
+              <a
+                href="https://github.com/HarshYadav273"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="GitHub profile"
+                className="bg-gray-800 p-3 rounded-full hover:bg-orange-500 transition-all duration-300 transform hover:scale-110"
+              >
                 <Github size={20} />
               </a>
-              <a href="#" className="bg-gray-800 p-3 rounded-full hover:bg-orange-500 transition-all duration-300 transform hover:scale-110">
+              <a
+                href="mailto:hy5451819@gmail.com"
+                aria-label="Email Harsh Yadav"
+                className="bg-gray-800 p-3 rounded-full hover:bg-orange-500 transition-all duration-300 transform hover:scale-110"
+              >
                 <Mail size={20} />
               </a>
             </div>
