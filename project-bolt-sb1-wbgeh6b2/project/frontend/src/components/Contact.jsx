@@ -75,7 +75,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-black mb-1">Email</h4>
-                  <p className="text-gray-600">hello@webforge.com</p>
+                  <p className="text-gray-600">hy5451819@gmail.com</p>
                 </div>
               </div>
 
@@ -95,7 +95,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-black mb-1">Location</h4>
-                  <p className="text-gray-600">Mumbai, Maharashtra, India</p>
+                  <p className="text-gray-600">Jhansi, Uttar Pradesh, India</p>
                 </div>
               </div>
             </div>
