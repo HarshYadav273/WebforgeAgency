@@ -25,7 +25,7 @@ export default function Contact() {
     setStatus('');
 
     try {
-      const response = await fetch('http://localhost:3001/api/contact', {
+      const response = await fetch('https://webforgeagency.onrender.com/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
