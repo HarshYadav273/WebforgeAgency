@@ -1,5 +1,6 @@
 import express from 'express';
 import { addContact, getContacts } from '../db/database.js';
+import { sendContactEmail } from '../lib/mailer.js';
 
 const router = express.Router();
 
@@ -12,15 +13,17 @@ router.post('/contact', async (req, res) => {
     }
 
     const contact = await addContact({ name, email, service, budget, message });
+    const emailResult = await sendContactEmail(contact);
 
     res.status(201).json({
       success: true,
       message: 'Contact form submitted successfully',
       id: contact.id,
+      emailDelivered: emailResult.delivered,
     });
   } catch (error) {
-    console.error('Error saving contact:', error);
-    res.status(500).json({ error: 'Failed to save contact' });
+    console.error('Error processing contact:', error);
+    res.status(500).json({ error: 'Failed to process contact' });
   }
 });
 
