@@ -1,5 +1,5 @@
 import express from 'express';
-import { addContact, getContacts } from '../db/database.js';
+import { addContact } from '../db/database.js';
 import { sendContactEmail } from '../lib/mailer.js';
 
 const router = express.Router();
@@ -27,14 +27,8 @@ router.post('/contact', async (req, res) => {
   }
 });
 
-router.get('/contacts', async (req, res) => {
-  try {
-    const contacts = await getContacts();
-    res.json(contacts);
-  } catch (error) {
-    console.error('Error fetching contacts:', error);
-    res.status(500).json({ error: 'Failed to fetch contacts' });
-  }
+router.get('/contacts', (req, res) => {
+  res.status(403).json({ error: 'Access denied' });
 });
 
 export default router;
